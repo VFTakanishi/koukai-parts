@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>後悔パーツ正当化ツール</title>
+  <meta name="description" content="買って後悔したチューニングパーツを、どんな失敗でも無理やり正当化するジョークツールです。">
+  <link rel="canonical" href="https://vftakanishi.github.io/koukai-parts/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="後悔パーツ正当化ツール">
+  <meta property="og:description" content="買って後悔したチューニングパーツを、どんな失敗でも無理やり正当化します。">
+  <meta property="og:url" content="https://vftakanishi.github.io/koukai-parts/">
+  <meta name="twitter:card" content="summary">
+  <script>
+    if (/(?:#|&)type=recovery(?:&|$)/.test(window.location.hash)) {
+      window.location.replace(`admin.html${window.location.hash}`);
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero-panel">
+      <p class="eyebrow">JOKE JUDGMENT TERMINAL</p>
+      <h1 id="app-title">後悔パーツ正当化ツール</h1>
+      <p class="lead">買って後悔したチューニングパーツを、どんな失敗でも無理やり正当化します。</p>
+      <p class="example-text">例: 「ブリッツの車高調 / すぐへたった」「柿本のマフラー / パワーが出なかった」</p>
+    </section>
+
+    <section class="input-panel">
+      <form id="justification-form" novalidate>
+        <div class="field">
+          <label for="productText">メーカー・パーツ名</label>
+          <textarea id="productText" name="productText" rows="2" maxlength="100" placeholder="例: ブリッツの車高調"></textarea>
+          <p class="field-note">2〜100文字。メーカー名もパーツ名も自由入力で大丈夫です。</p>
+        </div>
+
+        <div class="field">
+          <label for="disappointmentText">残念だった点</label>
+          <textarea id="disappointmentText" name="disappointmentText" rows="3" maxlength="300" placeholder="例: すぐへたった"></textarea>
+          <p class="field-note">2〜300文字。思ったことをそのまま書いてください。</p>
+        </div>
+
+        <div class="honeypot" aria-hidden="true">
+          <label for="companyName">会社名</label>
+          <input id="companyName" name="companyName" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button id="submitButton" class="primary-button" type="submit">この後悔を正当化する</button>
+        <p id="formMessage" class="form-message" aria-live="polite"></p>
+        <p class="data-note">入力内容は匿名で保存し、傾向分析や記事・動画制作に利用する場合があります。同じブラウザからの重複投稿を数えないため、匿名の識別番号だけを端末内に保存します。個人名、店舗担当者名、電話番号、ナンバーなどは入力しないでください。</p>
+      </form>
+    </section>
+
+    <section id="resultSection" class="result-panel hidden" aria-live="polite">
+      <div class="warning-banner" id="safetyWarning" hidden>※安全に関わる不具合は、使用を続けず専門店で点検してください。正当化できるのは出費だけです。</div>
+      <article class="judgment-card" id="judgmentCard">
+        <div class="stamp">判決</div>
+        <p class="card-label">正当化完了</p>
+        <h2 id="resultTitle">今回の正当化</h2>
+        <dl class="result-meta">
+          <div>
+            <dt>対象パーツ</dt>
+            <dd id="resultProduct"></dd>
+          </div>
+          <div>
+            <dt>残念だった点</dt>
+            <dd id="resultDisappointment"></dd>
+          </div>
+        </dl>
+        <p id="resultText" class="result-text"></p>
+        <p id="specificityHint" class="specificity-hint" hidden>不満点を具体的に書くと、正当化の精度が上がります。</p>
+      </article>
+
+      <div class="result-actions">
+        <button id="alternateButton" class="secondary-button" type="button">別の正当化も見る</button>
+        <button id="shareButton" class="secondary-button" type="button">この判決をシェアする</button>
+        <button id="copyButton" class="secondary-button" type="button">結果をコピー</button>
+        <button id="resetButton" class="ghost-button" type="button">別の後悔も正当化する</button>
+      </div>
+      <p id="resultMessage" class="result-message" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このツールはジョークです。商品の性能、安全性、適合性を保証・評価するものではありません。</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js?v=20260720-2"></script>
+  <script src="js/classifier.js?v=20260720-2"></script>
+  <script src="js/generator.js?v=20260720-2"></script>
+  <script src="js/supabase-client.js?v=20260720-2"></script>
+  <script src="js/share.js?v=20260720-2"></script>
+  <script src="js/app.js?v=20260720-2"></script>
+</body>
+</html>
