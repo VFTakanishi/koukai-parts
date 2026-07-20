@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>投稿データ管理 | 後悔パーツ正当化ツール</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <p class="admin-kicker">REGRET DATA MANAGER</p>
+        <h1>投稿データ管理</h1>
+        <p class="admin-lead">原文を確認しながら分類を整え、分析用CSVに書き出します。</p>
+      </div>
+      <button id="logoutButton" class="button button-dark" type="button" hidden>ログアウト</button>
+    </header>
+
+    <section id="loginSection" class="panel login-panel">
+      <h2>管理者ログイン</h2>
+      <p>一度ログインすれば、このパソコンではログイン状態が保存されます。</p>
+      <form id="loginForm" class="login-form" novalidate>
+        <label>メールアドレス<input id="email" type="email" autocomplete="username" required></label>
+        <label>パスワード<input id="password" type="password" autocomplete="current-password" required></label>
+        <button id="loginButton" class="button button-primary" type="submit">ログイン</button>
+        <p id="loginMessage" class="message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="passwordResetSection" class="panel login-panel hidden">
+      <h2>新しいパスワードを設定</h2>
+      <p>今後この管理画面へログインするときに使うパスワードを入力してください。</p>
+      <form id="passwordResetForm" class="login-form" novalidate>
+        <label>新しいパスワード<input id="newPassword" type="password" autocomplete="new-password" minlength="8" required></label>
+        <label>新しいパスワード（確認）<input id="newPasswordConfirm" type="password" autocomplete="new-password" minlength="8" required></label>
+        <button id="passwordResetButton" class="button button-primary" type="submit">このパスワードに変更</button>
+        <p class="form-hint">8文字以上で設定してください。</p>
+        <p id="passwordResetMessage" class="message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="dashboardSection" class="dashboard hidden">
+      <section class="stats-grid" aria-label="投稿状況">
+        <button class="panel stat-card" type="button" data-status-filter="all">
+          <span>集計対象</span><strong id="activeCount">-</strong>
+        </button>
+        <button class="panel stat-card attention" type="button" data-status-filter="unclassified">
+          <span>未分類</span><strong id="unclassifiedCount">-</strong>
+        </button>
+        <button class="panel stat-card" type="button" data-status-filter="unreviewed">
+          <span>未確認</span><strong id="unreviewedCount">-</strong>
+        </button>
+        <button class="panel stat-card muted" type="button" data-status-filter="excluded">
+          <span>除外</span><strong id="excludedCount">-</strong>
+        </button>
+      </section>
+
+      <section class="panel toolbar">
+        <label class="search-field">検索<input id="searchInput" type="search" placeholder="メーカー、パーツ、後悔理由"></label>
+        <label>表示
+          <select id="reviewFilter">
+            <option value="all">集計対象すべて</option>
+            <option value="unclassified">未分類だけ</option>
+            <option value="unreviewed">未確認だけ</option>
+            <option value="confirmed">確認済みだけ</option>
+            <option value="excluded">除外だけ</option>
+          </select>
+        </label>
+        <label>パーツ分類<select id="partCategoryFilter"></select></label>
+        <label>後悔理由分類<select id="complaintCategoryFilter"></select></label>
+        <label>並び順
+          <select id="sortOrder">
+            <option value="desc">新しい順</option>
+            <option value="asc">古い順</option>
+          </select>
+        </label>
+        <div class="toolbar-actions">
+          <button id="refreshButton" class="button button-dark" type="button">再読み込み</button>
+          <button id="csvButton" class="button button-primary" type="button">分析用CSVを出力</button>
+        </div>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="table-heading">
+          <div>
+            <h2>投稿一覧</h2>
+            <p>分類を直したら「確認して保存」。今後も使う表記だけ「辞書登録」します。</p>
+          </div>
+          <p id="pageInfo" class="page-info">-</p>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th class="date-column">日時</th>
+                <th class="source-column">入力されたメーカー・パーツ</th>
+                <th class="source-column">入力された後悔理由</th>
+                <th class="manufacturer-column">メーカー分類</th>
+                <th class="category-column">パーツ分類</th>
+                <th class="category-column">後悔理由分類</th>
+                <th class="status-column">状態</th>
+                <th class="actions-column">操作</th>
+              </tr>
+            </thead>
+            <tbody id="recordsBody"></tbody>
+          </table>
+        </div>
+        <p id="recordsMessage" class="message" aria-live="polite"></p>
+        <div class="pagination">
+          <button id="prevPageButton" class="button button-dark" type="button">前の50件</button>
+          <button id="nextPageButton" class="button button-dark" type="button">次の50件</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="aliasDialog" class="alias-dialog">
+    <form id="aliasForm" method="dialog">
+      <div class="dialog-heading">
+        <div><p class="admin-kicker">CLASSIFICATION DICTIONARY</p><h2>辞書へ登録</h2></div>
+        <button id="closeAliasDialog" class="icon-button" type="button" aria-label="閉じる">×</button>
+      </div>
+      <p class="dialog-help">チェックした表記だけ、次回から同じ分類に使います。表記は必要に応じて短く直してください。</p>
+      <div class="alias-option">
+        <label class="check-label"><input id="useManufacturerAlias" type="checkbox">メーカー表記を登録</label>
+        <div class="alias-fields"><label>入力中の表記<input id="manufacturerAlias" type="text"></label><label>分類先<input id="manufacturerCanonical" type="text" readonly></label></div>
+      </div>
+      <div class="alias-option">
+        <label class="check-label"><input id="usePartAlias" type="checkbox">パーツ表記を登録</label>
+        <div class="alias-fields"><label>入力中の表記<input id="partAlias" type="text"></label><label>分類先<input id="partCanonical" type="text" readonly></label></div>
+      </div>
+      <div class="alias-option">
+        <label class="check-label"><input id="useComplaintAlias" type="checkbox">後悔理由の表記を登録</label>
+        <div class="alias-fields"><label>入力中の表記<input id="complaintAlias" type="text"></label><label>分類先<input id="complaintCanonical" type="text" readonly></label></div>
+      </div>
+      <p id="aliasMessage" class="message" aria-live="polite"></p>
+      <div class="dialog-actions">
+        <button class="button button-dark" type="button" id="cancelAliasButton">キャンセル</button>
+        <button class="button button-primary" type="submit">選んだ表記を登録</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js?v=20260720-2"></script>
+  <script src="js/classifier.js?v=20260720-2"></script>
+  <script src="js/supabase-client.js?v=20260720-2"></script>
+  <script src="js/admin.js?v=20260720-2"></script>
+</body>
+</html>
