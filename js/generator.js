@@ -241,7 +241,7 @@
       ]
     },
     {
-      part: "エンジンオイル",
+      part: "オイル類",
       key: "engine_oil_no_change",
       keywords: ["変わらない", "違いが分からない", "効果がない"],
       lines: [
@@ -615,12 +615,12 @@
     { part: "エンジン部品", key: "engine_damage", patterns: [/壊れ|ブロー|破損/], lines: supplementalLinePacks.damage },
     { part: "エンジン部品", key: "engine_wear", patterns: [/寿命|すぐ減|摩耗/], lines: supplementalLinePacks.wear },
     { part: "エンジン部品", key: "engine_cost", patterns: [/高すぎ|値段.*高|費用.*高/], lines: supplementalLinePacks.cost },
-    { part: "エンジンオイル", key: "oil_dirty", patterns: [/黒くな|汚れ/], lines: supplementalLinePacks.maintenance },
-    { part: "エンジンオイル", key: "oil_consumption", patterns: [/減り.*早|消費.*多|すぐ減/], lines: supplementalLinePacks.wear },
-    { part: "エンジンオイル", key: "oil_leak", patterns: [/オイル.*漏|漏れ/], lines: supplementalLinePacks.leak },
-    { part: "エンジンオイル", key: "oil_cold", patterns: [/冷間|冷えてる.*調子|始動.*悪/], lines: supplementalLinePacks.difficult },
-    { part: "エンジンオイル", key: "oil_pressure", patterns: [/油圧.*(?:安定しない|低い|高い|ばらつ)/], lines: supplementalLinePacks.unstable },
-    { part: "エンジンオイル", key: "oil_cost", patterns: [/値段.*高|高すぎ|高かった/], lines: supplementalLinePacks.cost },
+    { part: "オイル類", key: "oil_dirty", patterns: [/黒くな|汚れ/], lines: supplementalLinePacks.maintenance },
+    { part: "オイル類", key: "oil_consumption", patterns: [/減り.*早|消費.*多|すぐ減/], lines: supplementalLinePacks.wear },
+    { part: "オイル類", key: "oil_leak", patterns: [/オイル.*漏|漏れ/], lines: supplementalLinePacks.leak },
+    { part: "オイル類", key: "oil_cold", patterns: [/冷間|冷えてる.*調子|始動.*悪/], lines: supplementalLinePacks.difficult },
+    { part: "オイル類", key: "oil_pressure", patterns: [/油圧.*(?:安定しない|低い|高い|ばらつ)/], lines: supplementalLinePacks.unstable },
+    { part: "オイル類", key: "oil_cost", patterns: [/値段.*高|高すぎ|高かった/], lines: supplementalLinePacks.cost },
     { part: "タイヤ", key: "tire_puncture", patterns: [/バースト|破裂|パンク|釘.*刺|空気.*抜|エア漏れ|空気圧.*下が/], lines: supplementalLinePacks.puncture },
     { part: "タイヤ", key: "tire_grip", patterns: [/雨.*滑|グリップ.*(?:しない|弱|足り)|滑る|すべる/], lines: supplementalLinePacks.grip },
     { part: "タイヤ", key: "tire_comfort", patterns: [/乗り心地|突き上げ|硬い|硬かった/], lines: supplementalLinePacks.feel },

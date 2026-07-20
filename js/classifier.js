@@ -8,7 +8,8 @@
     { label: "見た目", slug: "appearance", keywords: ["ダサい", "色が違う", "安っぽい", "イメージと違う", "見た目", "映えない", "見づらい", "見にくい", "読みにくい", "汚れる", "ダスト"] },
     { label: "費用", slug: "cost", keywords: ["高い", "工賃", "追加費用", "予算オーバー", "金がかかる", "高すぎる", "コスパが悪い"] },
     { label: "法規・実用性", slug: "legal_practicality", keywords: ["車検", "最低地上高", "公道", "使いづらい", "普段使い", "乗り降り", "はみ出す"] },
-    { label: "納期・供給", slug: "delivery_supply", keywords: ["届かない", "納期", "欠品", "廃盤", "来ない", "手に入らない"] }
+    { label: "納期・供給", slug: "delivery_supply", keywords: ["届かない", "納期", "欠品", "廃盤", "来ない", "手に入らない"] },
+    { label: "その他", slug: "other", keywords: [] }
   ];
 
   const partDefinitions = [
@@ -26,11 +27,12 @@
     { label: "シート・内装", slug: "interior", keywords: ["シート", "内装", "ステアリング", "ハンドル"] },
     { label: "メーター", slug: "meter", keywords: ["メーター", "追加メーター"] },
     { label: "冷却系", slug: "cooling", keywords: ["ラジエーター", "オイルクーラー", "インタークーラー", "冷却"] },
-    { label: "エンジンオイル", slug: "engine_oil", keywords: ["エンジンオイル", "モーターオイル", "潤滑油"] },
+    { label: "オイル類", slug: "engine_oil", keywords: ["エンジンオイル", "モーターオイル", "ギアオイル", "ミッションオイル", "デフオイル", "ATF", "CVTF", "ブレーキフルード", "潤滑油"] },
     { label: "タワーバー・ボディ補強", slug: "body_brace", keywords: ["タワーバー", "ストラットバー", "ボディ補強", "補強バー"] },
     { label: "スロットルコントローラー", slug: "throttle_controller", keywords: ["スロコン", "スロットルコントローラー", "アクセルコントローラー"] },
     { label: "カーオーディオ", slug: "car_audio", keywords: ["カーオーディオ", "オーディオ", "スピーカー", "ウーファー", "サブウーファー", "アンプ"] },
-    { label: "エンジン部品", slug: "engine", keywords: ["ピストン", "カム", "エンジン", "ヘッド", "ポンプ", "インジェクター"] }
+    { label: "エンジン部品", slug: "engine", keywords: ["ピストン", "カム", "エンジン", "ヘッド", "ポンプ", "インジェクター"] },
+    { label: "その他", slug: "other", keywords: [] }
   ];
 
   const fallbackPart = { label: "未分類", slug: "unclassified" };
@@ -99,8 +101,15 @@
   }
 
   function classifyByKeywords(text, definitions, fallbackLabel) {
-    const definition = definitions.find((item) => includesAny(text, item.keywords));
-    return definition ? definition.label : fallbackLabel;
+    const normalized = normalize(text);
+    const match = definitions
+      .flatMap((definition) => definition.keywords.map((keyword) => ({
+        definition,
+        keyword: normalize(keyword)
+      })))
+      .filter((item) => item.keyword && normalized.includes(item.keyword))
+      .sort((a, b) => b.keyword.length - a.keyword.length)[0];
+    return match ? match.definition.label : fallbackLabel;
   }
 
   function detectSafetyWarning(productText, disappointmentText) {
