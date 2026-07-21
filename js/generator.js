@@ -568,7 +568,7 @@
   ];
 
   const supplementalRules = [
-    { part: "マフラー・排気系", key: "exhaust_valve_stuck", patterns: [/バルブ.*閉じたまま|バルブ.*開かな|閉じっぱなし/], lines: ["{product}のおかげで、自分の愛車には厳しく、周囲の人の耳には優しくできました。"] },
+    { part: "マフラー・排気系", key: "exhaust_valve_stuck", patterns: [/バルブ.*閉じたまま|バルブ.*開かな|閉じたまま|閉じっぱなし|開かな/], lines: ["{product}のおかげで、自分の愛車には厳しく、周囲の人の耳には優しくできました。"] },
     { part: "マフラー・排気系", key: "exhaust_cost", patterns: [/^(?:値段が)?高い$|高かった|高すぎ/], lines: ["{product}は高かったぶん、元を取ろうとして乗る回数が増えます。稼働率向上機能付きです。"] },
     { part: "マフラー・排気系", key: "exhaust_heavy", patterns: [/純正.*(?:より|以上).*(?:重い|重く)|(?:重い|重かった|重くなった)/], lines: ["{product}は純正より重いぶん、交換作業の負荷まで増やしてくれます。筋トレ代込みです。"] },
     { part: "マフラー・排気系", key: "exhaust_low_torque", patterns: [/低速.*トルク.*(?:無|なく|落|減|弱)/], lines: ["{product}で低速トルクが減ったぶん、アクセルを踏む機会が増えます。実質、運転練習機能付きです。"] },
