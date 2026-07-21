@@ -69,6 +69,14 @@
         </label>
         <label>パーツ分類<select id="partCategoryFilter"></select></label>
         <label>後悔理由分類<select id="complaintCategoryFilter"></select></label>
+        <label>正当化文
+          <select id="justificationTypeFilter">
+            <option value="all">すべて</option>
+            <option value="specific">専用</option>
+            <option value="generic">汎用</option>
+            <option value="unknown">未記録</option>
+          </select>
+        </label>
         <label>並び順
           <select id="sortOrder">
             <option value="desc">新しい順</option>
@@ -99,6 +107,7 @@
                 <th class="manufacturer-column">メーカー分類</th>
                 <th class="category-column">パーツ分類</th>
                 <th class="category-column">後悔理由分類</th>
+                <th class="status-column">正当化文</th>
                 <th class="status-column">状態</th>
                 <th class="actions-column">操作</th>
               </tr>
@@ -145,7 +154,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/config.js?v=20260720-3"></script>
   <script src="js/classifier.js?v=20260720-3"></script>
-  <script src="js/supabase-client.js?v=20260720-3"></script>
-  <script src="js/admin.js?v=20260720-3"></script>
+  <script src="js/supabase-client.js?v=20260721-1"></script>
+  <script src="js/admin.js?v=20260721-1"></script>
 </body>
 </html>
