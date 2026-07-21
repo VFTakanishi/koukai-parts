@@ -149,6 +149,7 @@
           manufacturer_name: window.TuningClassifier.classifyManufacturer(productText),
           part_category: result.partCategory,
           complaint_category: result.complaintCategory,
+          justification_type: result.ruleKey === "fallback" ? "generic" : "specific",
           visitor_id: getAnonymousId(),
           product_normalized: window.TuningClassifier.normalizeForDedup(productText) || window.TuningClassifier.normalize(productText),
           disappointment_normalized: window.TuningClassifier.normalizeForDedup(disappointmentText) || window.TuningClassifier.normalize(disappointmentText)

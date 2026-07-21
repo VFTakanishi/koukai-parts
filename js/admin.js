@@ -16,6 +16,7 @@
     reviewFilter: document.getElementById("reviewFilter"),
     partFilter: document.getElementById("partCategoryFilter"),
     complaintFilter: document.getElementById("complaintCategoryFilter"),
+    justificationTypeFilter: document.getElementById("justificationTypeFilter"),
     sortOrder: document.getElementById("sortOrder"),
     refreshButton: document.getElementById("refreshButton"),
     csvButton: document.getElementById("csvButton"),
@@ -106,7 +107,7 @@
     if (!rows.length) {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
-      cell.colSpan = 8;
+      cell.colSpan = 9;
       cell.textContent = "条件に合う投稿はありません。";
       row.appendChild(cell);
       elements.recordsBody.appendChild(row);
@@ -143,6 +144,15 @@
       complaintSelect.className = "complaint-select";
       complaintCell.appendChild(complaintSelect);
       row.appendChild(complaintCell);
+
+      const justificationCell = document.createElement("td");
+      const justificationBadge = document.createElement("span");
+      const justificationLabels = { specific: "専用", generic: "汎用", unknown: "未記録" };
+      const justificationType = record.justification_type || "unknown";
+      justificationBadge.className = `status-badge ${justificationType === "generic" ? "unclassified" : "confirmed"}`;
+      justificationBadge.textContent = justificationLabels[justificationType] || "未記録";
+      justificationCell.appendChild(justificationBadge);
+      row.appendChild(justificationCell);
 
       const statusCell = document.createElement("td");
       const badge = document.createElement("span");
@@ -185,6 +195,7 @@
       reviewFilter: elements.reviewFilter.value,
       partCategory: elements.partFilter.value,
       complaintCategory: elements.complaintFilter.value,
+      justificationType: elements.justificationTypeFilter.value,
       sortOrder: elements.sortOrder.value
     };
   }
@@ -351,13 +362,15 @@
   }
 
   function buildCsv(rows) {
-    const headers = ["投稿日時", "入力されたメーカー・パーツ", "入力された後悔理由", "メーカー分類", "パーツ分類", "後悔理由分類", "確認状態"];
+    const headers = ["投稿日時", "入力されたメーカー・パーツ", "入力された後悔理由", "メーカー分類", "パーツ分類", "後悔理由分類", "正当化文", "確認状態"];
     const lines = [headers.map(csvEscape).join(",")];
     rows.forEach((row) => {
       lines.push([
         formatDate(row.created_at), row.product_text, row.disappointment_text,
         row.manufacturer_name, window.TuningClassifier.fromDbPartCategory(row.part_category),
-        window.TuningClassifier.fromDbComplaintCategory(row.complaint_category), exportStatus(row)
+        window.TuningClassifier.fromDbComplaintCategory(row.complaint_category),
+        ({ specific: "専用", generic: "汎用", unknown: "未記録" }[row.justification_type] || "未記録"),
+        exportStatus(row)
       ].map(csvEscape).join(","));
     });
     return "\uFEFF" + lines.join("\r\n");
@@ -367,7 +380,7 @@
     elements.csvButton.disabled = true;
     try {
       const rows = await window.TuningSupabase.fetchAllAdminRecords({
-        search: "", reviewFilter: "all", partCategory: "all", complaintCategory: "all", sortOrder: "desc"
+        search: "", reviewFilter: "all", partCategory: "all", complaintCategory: "all", justificationType: "all", sortOrder: "desc"
       });
       const blob = new Blob([buildCsv(rows)], { type: "text/csv;charset=utf-8" });
       const url = URL.createObjectURL(blob);
@@ -475,7 +488,7 @@
     loadRows();
   }));
 
-  [elements.reviewFilter, elements.partFilter, elements.complaintFilter, elements.sortOrder].forEach((control) => {
+  [elements.reviewFilter, elements.partFilter, elements.complaintFilter, elements.justificationTypeFilter, elements.sortOrder].forEach((control) => {
     control.addEventListener("change", function () { state.page = 1; loadRows(); });
   });
   elements.searchInput.addEventListener("input", function () {

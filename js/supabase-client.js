@@ -32,6 +32,7 @@
       manufacturer_name: payload.manufacturer_name || "未分類",
       part_category: window.TuningClassifier.toDbPartCategory(payload.part_category),
       complaint_category: window.TuningClassifier.toDbComplaintCategory(payload.complaint_category),
+      justification_type: payload.justification_type || "unknown",
       visitor_id: payload.visitor_id,
       product_normalized: payload.product_normalized,
       disappointment_normalized: payload.disappointment_normalized,
@@ -99,6 +100,9 @@
     }
     if (options.complaintCategory && options.complaintCategory !== "all") {
       query = query.eq("complaint_category", options.complaintCategory);
+    }
+    if (options.justificationType && options.justificationType !== "all") {
+      query = query.eq("justification_type", options.justificationType);
     }
 
     switch (options.reviewFilter) {
