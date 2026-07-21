@@ -14,7 +14,7 @@
 
   const partDefinitions = [
     { label: "車高調・サスペンション", slug: "suspension", keywords: ["車高調", "サスペンション", "ショック", "ダンパー", "スプリング", "足回り"] },
-    { label: "マフラー・排気系", slug: "exhaust", keywords: ["マフラー", "触媒", "キャタ", "排気", "エキマニ", "フロントパイプ", "センターパイプ"] },
+    { label: "マフラー・排気系", slug: "exhaust", keywords: ["マフラー", "触媒", "キャタ", "排気", "エキマニ", "フロントパイプ", "センターパイプ", "ecv", "エキゾーストコントロールバルブ", "排気バルブ"] },
     { label: "エアクリーナー・吸気系", slug: "intake", keywords: ["エアクリ", "エアクリーナー", "インテーク", "吸気", "サクション"] },
     { label: "タービン・過給機", slug: "forced_induction", keywords: ["タービン", "過給機", "ブースト", "スーパーチャージャー"] },
     { label: "ECU・電子制御", slug: "ecu", keywords: ["ecu", "rom", "コンピュータ", "電子制御", "セッティング"] },
