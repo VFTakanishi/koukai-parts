@@ -35,9 +35,7 @@
       key: "suspension_comfort",
       keywords: ["乗り心地", "硬い", "跳ねる", "突き上げ"],
       lines: [
-        "路面の細かい凹凸まで伝わるので、道路の状態を詳しく把握できます。車高調代で路面調査までできるなら、良い買い物です。",
-        "硬いぶん長距離では早めに休憩するようになります。{product}に休憩管理まで付いてきました。",
-        "路面ごとの硬さを比べるうちに、舗装の違いが分かるようになります。乗り心地は悪化しても、運転手の感度は上がっています。"
+        "{product}で乗り心地は悪くなりましたが、路面からの情報量は増えました。情報量で考えれば得しています。"
       ]
     },
     {
@@ -312,7 +310,8 @@
     ],
     suspension_noise: [/(?:異音|コトコト|ゴトゴト|カタカタ|ギシギシ|きしみ|音が出)/],
     suspension_comfort: [
-      /乗り心地.*(?:悪|硬|固|最悪)/,
+      /乗り心地.*(?:悪|硬|固|最悪|ひど|酷|乗れたもの)/,
+      /とんでもない乗り心地/,
       /^(?:かなり|とても|結構|思ったより|予想より)?(?:硬|固)(?:い|かった|すぎる|すぎた)$/,
       /(?:乗り心地|足|サス|ショック|車高調|路面|段差).*(?:硬い|硬く|硬かった|硬すぎ|固い|固かった)/,
       /(?:硬い|硬く|硬かった|硬すぎ|固い|固かった).*(?:乗り心地|跳ね|突き上げ)/,
@@ -547,7 +546,41 @@
     ]
   };
 
+  const universalRules = [
+    {
+      part: "*",
+      key: "universal_loose_fit",
+      patterns: [/ガタつ|ガタガタ|ぐらつ|グラグラ/],
+      lines: ["{product}はガタつくぶん、取付精度を体で測れます。実質、体感式の測定器です。"]
+    },
+    {
+      part: "*",
+      key: "universal_puzzle_fit",
+      patterns: [/付かな|取り付け.*できな|取付.*できな|全く合わ|ポン付け.*(?:無理|できな)|加工.*必要/],
+      lines: ["{product}はそのまま付かなかったぶん、取り付け以外に知恵の輪としても楽しめます。遊び方が二つあります。"]
+    },
+    {
+      part: "*",
+      key: "universal_emergency_unused",
+      patterns: [/(?=.*(?:もしも|万一|念のため|お守り))(?=.*(?:使わず|使わな|出番.*な))/],
+      lines: ["{product}は使わずに済んだので、もしもの事態は起きませんでした。お守りとしては優秀です。"]
+    }
+  ];
+
   const supplementalRules = [
+    { part: "マフラー・排気系", key: "exhaust_valve_stuck", patterns: [/バルブ.*閉じたまま|バルブ.*開かな|閉じっぱなし/], lines: ["{product}のおかげで、自分の愛車には厳しく、周囲の人の耳には優しくできました。"] },
+    { part: "マフラー・排気系", key: "exhaust_cost", patterns: [/^(?:値段が)?高い$|高かった|高すぎ/], lines: ["{product}は高かったぶん、元を取ろうとして乗る回数が増えます。稼働率向上機能付きです。"] },
+    { part: "マフラー・排気系", key: "exhaust_heavy", patterns: [/純正.*(?:より|以上).*(?:重い|重く)|(?:重い|重かった|重くなった)/], lines: ["{product}は純正より重いぶん、交換作業の負荷まで増やしてくれます。筋トレ代込みです。"] },
+    { part: "マフラー・排気系", key: "exhaust_low_torque", patterns: [/低速.*トルク.*(?:無|なく|落|減|弱)/], lines: ["{product}で低速トルクが減ったぶん、アクセルを踏む機会が増えます。実質、運転練習機能付きです。"] },
+    { part: "ECU・電子制御", key: "ecu_early_warning", patterns: [/(?:サーキット|コース).*(?:一周|1周).*(?:走れな|まともに走れ)|(?:一周|1周).*(?:走れな|まともに走れ)/], lines: ["{product}は一周する前に問題を出してくれるので、不具合の発見が早いです。実質、早期警報機能付きです。"] },
+    { part: "LSD・駆動系", key: "lsd_family_lock", patterns: [/(?:嫁|妻|奥さん|家族|彼女|旦那|夫).*(?:怒|キレ)/], lines: ["{product}は駆動力だけでなく、家族の感情までロックします。効きは十分です。"] },
+    { part: "オイル類", key: "oil_lsd_chatter", patterns: [/チャタリング|バキバキ|ゴリゴリ|作動音.*(?:大き|酷|すご)/], lines: ["{product}はLSDとの相性を音で知らせてくれます。実質、相性診断機能付きです。"] },
+    { part: "タイヤ", key: "tire_road_noise", patterns: [/ロードノイズ|走行音.*(?:うるさ|酷|大き)/], lines: ["{product}はロードノイズで速度を知らせてくれます。実質、音声式スピード警告です。"] },
+    { part: "ホイール", key: "wheel_bent", patterns: [/(?:リム|ホイール).*(?:曲|歪)|(?:曲|歪).*(?:リム|ホイール)/], lines: ["{product}は曲がるほど、路面と本気で向き合いました。真面目に仕事をした結果です。"] },
+    { part: "エアロ・外装", key: "aero_road_awareness", patterns: [/(?:段差|入口).*(?:擦|こす)|擦りやす|地面.*擦/], lines: ["{product}のおかげで段差を見る目が鍛えられました。実質、路面監視機能付きです。"] },
+    { part: "ブレーキ", key: "brake_warped", patterns: [/最初から.*(?:歪|ゆが)|(?:歪ん|ゆがん)でた|新品.*(?:歪|ゆが)/], lines: ["{product}は最初から歪んでいたぶん、新品でも点検が必要だと一発で覚えられました。実質、実物教材です。"] },
+    { part: "タワーバー・ボディ補強", key: "brace_driver_diagnosis", patterns: [/(?:運転|操作).*(?:下手|粗)|(?:下手さ|粗).*(?:目立|出る)/], lines: ["{product}はボディだけでなく、運転の粗まで可視化しました。実質、運転診断機です。"] },
+    { part: "その他", key: "paddle_timing", patterns: [/(?:音|作動音).*(?:信号|入力).*(?:ずれ|ズレ)|(?:信号|入力).*(?:タイミング).*(?:ずれ|ズレ)/], lines: ["{product}は音と入力がズレるぶん、一回の操作で予告と余韻を楽しめます。実質、二段演出です。"] },
     { part: "マフラー・排気系", key: "exhaust_loud", patterns: [/音.*(?:大き|うるさ|酷)|うるさ|こもり/], lines: supplementalLinePacks.loud },
     { part: "マフラー・排気系", key: "exhaust_quiet", patterns: [/静か|音.*小さ/], lines: supplementalLinePacks.quiet },
     { part: "マフラー・排気系", key: "exhaust_fit", patterns: [/フィッティング|干渉|合わ|付か/], lines: supplementalLinePacks.fitment },
@@ -643,7 +676,7 @@
   ];
 
   function normalize(text) {
-    return String(text || "").trim().toLowerCase().replace(/\s+/g, "");
+    return String(text || "").normalize("NFKC").trim().toLowerCase().replace(/\s+/g, "");
   }
 
   function fill(template, product) {
@@ -658,6 +691,12 @@
     );
     if (primaryRule) {
       return primaryRule;
+    }
+    const universalRule = universalRules.find((rule) =>
+      rule.patterns.some((pattern) => pattern.test(target))
+    );
+    if (universalRule) {
+      return universalRule;
     }
     return supplementalRules.find((rule) =>
       rule.part === partCategory && rule.patterns.some((pattern) => pattern.test(target))

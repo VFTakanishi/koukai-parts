@@ -80,7 +80,7 @@
   };
   const vaguePhrases = ["なんとなく", "微妙", "いまいち", "イマイチ", "気に入らない", "思っていた感じと違う", "思ってた感じと違う", "期待外れ", "よく分からない"];
   const safetyParts = ["ブレーキ", "タイヤ", "ステアリング", "ハンドル"];
-  const safetyIssues = ["効かない", "効きが悪い", "止まらない", "滑る", "バースト", "破裂", "パンク", "空気が抜け", "エア漏れ", "空気圧", "亀裂", "ひび", "脱輪", "緩み", "振動", "異音", "漏れ"];
+  const safetyIssues = ["効かない", "効きが悪い", "止まらない", "滑る", "バースト", "破裂", "パンク", "空気が抜け", "エア漏れ", "空気圧", "亀裂", "ひび", "脱輪", "緩み", "振動", "異音", "漏れ", "歪み", "歪ん", "ガタつ", "ガタガタ"];
   const directSafetyIssues = ["燃料漏れ", "ガソリン漏れ", "オイル漏れ", "白煙"];
 
   function normalize(text) {
@@ -113,7 +113,7 @@
   }
 
   function detectSafetyWarning(productText, disappointmentText) {
-    const productIsSafetyRelated = includesAny(productText, safetyParts);
+    const productIsSafetyRelated = includesAny(`${productText} ${disappointmentText}`, safetyParts);
     return includesAny(disappointmentText, directSafetyIssues) ||
       (productIsSafetyRelated && includesAny(disappointmentText, safetyIssues));
   }
