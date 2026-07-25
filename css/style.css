@@ -471,6 +471,24 @@ button:disabled {
   font-size: 11px;
 }
 
+.creator-credit {
+  position: fixed;
+  right: max(10px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 10;
+  margin: 0;
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.62);
+  background: rgba(24, 23, 19, 0.72);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+}
+
 .honeypot {
   position: absolute;
   left: -9999px;
