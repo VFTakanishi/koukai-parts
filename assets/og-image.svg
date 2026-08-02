@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#181713"/>
+  <defs>
+    <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#ffd400" opacity="0.24"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <path d="M0 0h880L700 630H0z" fill="#ffd400"/>
+  <path d="M960-80l320 0v790H740z" fill="#d62218"/>
+  <path d="M1040-40l66 0-250 710h-66z" fill="#11100d" opacity="0.9"/>
+  <rect x="62" y="54" width="330" height="48" fill="#11100d"/>
+  <text x="82" y="88" fill="#ffffff" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="3">TUNING PARTS REVIEW</text>
+  <text x="62" y="190" fill="#11100d" font-family="'Yu Gothic', 'Meiryo', sans-serif" font-size="76" font-weight="900">後悔パーツ</text>
+  <text x="62" y="282" fill="#11100d" font-family="'Yu Gothic', 'Meiryo', sans-serif" font-size="76" font-weight="900">正当化ツール</text>
+  <rect x="62" y="326" width="636" height="8" fill="#d62218"/>
+  <text x="62" y="392" fill="#11100d" font-family="'Yu Gothic', 'Meiryo', sans-serif" font-size="32" font-weight="700">その失敗、無理やり正当化します。</text>
+  <g transform="translate(70 454) rotate(-2)">
+    <rect width="430" height="94" fill="#fffaf0" stroke="#11100d" stroke-width="5"/>
+    <text x="28" y="60" fill="#d62218" font-family="'Yu Gothic', 'Meiryo', sans-serif" font-size="34" font-weight="900">この後悔は無罪です</text>
+  </g>
+  <g transform="translate(865 405) rotate(-8)">
+    <circle cx="105" cy="105" r="98" fill="#ffd400" stroke="#11100d" stroke-width="12"/>
+    <circle cx="105" cy="105" r="76" fill="none" stroke="#d62218" stroke-width="6"/>
+    <text x="105" y="93" text-anchor="middle" fill="#11100d" font-family="'Yu Gothic', 'Meiryo', sans-serif" font-size="28" font-weight="900">強制</text>
+    <text x="105" y="133" text-anchor="middle" fill="#11100d" font-family="'Yu Gothic', 'Meiryo', sans-serif" font-size="28" font-weight="900">正当化</text>
+  </g>
+  <text x="1135" y="590" text-anchor="end" fill="#ffffff" opacity="0.8" font-family="'Yu Gothic', 'Meiryo', sans-serif" font-size="20">制作 VF高西</text>
+</svg>
