@@ -458,9 +458,9 @@ button:disabled {
   margin-top: 14px;
 }
 
-.result-actions .secondary-button:first-child {
-  background: var(--red);
-  color: #fff;
+.result-actions .share-button {
+  grid-column: 1 / -1;
+  font-size: 17px;
 }
 
 .site-footer {

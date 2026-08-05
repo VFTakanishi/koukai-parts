@@ -17,7 +17,6 @@
   const resultText = document.getElementById("resultText");
   const specificityHint = document.getElementById("specificityHint");
   const resultMessage = document.getElementById("resultMessage");
-  const alternateButton = document.getElementById("alternateButton");
   const resetButton = document.getElementById("resetButton");
   const shareButton = document.getElementById("shareButton");
   const copyButton = document.getElementById("copyButton");
@@ -28,7 +27,7 @@
   resultTitle.textContent = "\u4eca\u56de\u306e\u6b63\u5f53\u5316";
   document.querySelector(".eyebrow").textContent = "TUNING PARTS REVIEW";
   document.querySelector(".stamp").textContent = "\u30ec\u30d3\u30e5\u30fc";
-  shareButton.textContent = "\u3053\u306e\u6b63\u5f53\u5316\u3092\u30b7\u30a7\u30a2";
+  shareButton.textContent = "正当化をシェアしてネタにする";
   document.title = window.APP_CONFIG.APP_NAME;
 
   function setMessage(element, text, type) {
@@ -213,26 +212,6 @@
     }
   }
 
-  function handleAlternate() {
-    if (!latestResult) {
-      return;
-    }
-
-    const result = window.TuningGenerator.generateJustification(
-      latestResult.productText,
-      latestResult.disappointmentText,
-      { excludeVariantIndex: latestResult.variantIndex }
-    );
-
-    latestResult.generatedText = result.generatedText;
-    latestResult.punchLine = getPunchLine(result.generatedText);
-    latestResult.safetyWarning = result.safetyWarning;
-    latestResult.variantIndex = result.variantIndex;
-    latestResult.ruleKey = result.ruleKey;
-    renderResult(latestResult.productText, latestResult.disappointmentText, result);
-    setMessage(resultMessage, "別の正当化を表示しました。", "success");
-  }
-
   function handleReset() {
     form.reset();
     clearMessage(formMessage);
@@ -242,7 +221,6 @@
   }
 
   form.addEventListener("submit", handleSubmit);
-  alternateButton.addEventListener("click", handleAlternate);
   shareButton.addEventListener("click", handleShare);
   copyButton.addEventListener("click", handleCopy);
   resetButton.addEventListener("click", handleReset);

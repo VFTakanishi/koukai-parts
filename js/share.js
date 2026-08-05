@@ -10,7 +10,7 @@
   function buildShareText(result) {
     const siteUrl = getShareUrl();
     return [
-      `${result.productText}が「${result.disappointmentText}」だった件を、無理やり正当化してもらいました。`,
+      `${result.productText}が「${result.disappointmentText}」件を、無理やり正当化してもらいました。`,
       "",
       `「${result.punchLine}」`,
       "",

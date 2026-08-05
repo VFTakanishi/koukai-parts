@@ -27,7 +27,7 @@
       window.location.replace(`admin.html${window.location.hash}`);
     }
   </script>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260805-1">
 </head>
 <body>
   <main class="page-shell">
@@ -84,8 +84,7 @@
       </article>
 
       <div class="result-actions">
-        <button id="alternateButton" class="secondary-button" type="button">別の正当化も見る</button>
-        <button id="shareButton" class="secondary-button" type="button">この判決をシェアする</button>
+        <button id="shareButton" class="primary-button share-button" type="button">正当化をシェアしてネタにする</button>
         <button id="copyButton" class="secondary-button" type="button">結果をコピー</button>
         <button id="resetButton" class="ghost-button" type="button">別の後悔も正当化する</button>
       </div>
@@ -103,7 +102,7 @@
   <script src="js/classifier.js?v=20260805-2"></script>
   <script src="js/generator.js?v=20260805-2"></script>
   <script src="js/supabase-client.js?v=20260721-1"></script>
-  <script src="js/share.js?v=20260720-3"></script>
-  <script src="js/app.js?v=20260730-1"></script>
+  <script src="js/share.js?v=20260805-1"></script>
+  <script src="js/app.js?v=20260805-1"></script>
 </body>
 </html>
