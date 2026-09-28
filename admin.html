@@ -14,33 +14,9 @@
         <h1>投稿データ管理</h1>
         <p class="admin-lead">原文を確認しながら分類を整え、分析用CSVに書き出します。</p>
       </div>
-      <button id="logoutButton" class="button button-dark" type="button" hidden>ログアウト</button>
     </header>
 
-    <section id="loginSection" class="panel login-panel">
-      <h2>管理者ログイン</h2>
-      <p>一度ログインすれば、このパソコンではログイン状態が保存されます。</p>
-      <form id="loginForm" class="login-form" novalidate>
-        <label>メールアドレス<input id="email" type="email" autocomplete="username" required></label>
-        <label>パスワード<input id="password" type="password" autocomplete="current-password" required></label>
-        <button id="loginButton" class="button button-primary" type="submit">ログイン</button>
-        <p id="loginMessage" class="message" aria-live="polite"></p>
-      </form>
-    </section>
-
-    <section id="passwordResetSection" class="panel login-panel hidden">
-      <h2>新しいパスワードを設定</h2>
-      <p>今後この管理画面へログインするときに使うパスワードを入力してください。</p>
-      <form id="passwordResetForm" class="login-form" novalidate>
-        <label>新しいパスワード<input id="newPassword" type="password" autocomplete="new-password" minlength="8" required></label>
-        <label>新しいパスワード（確認）<input id="newPasswordConfirm" type="password" autocomplete="new-password" minlength="8" required></label>
-        <button id="passwordResetButton" class="button button-primary" type="submit">このパスワードに変更</button>
-        <p class="form-hint">8文字以上で設定してください。</p>
-        <p id="passwordResetMessage" class="message" aria-live="polite"></p>
-      </form>
-    </section>
-
-    <section id="dashboardSection" class="dashboard hidden">
+    <section id="dashboardSection" class="dashboard">
       <section class="stats-grid" aria-label="投稿状況">
         <button class="panel stat-card" type="button" data-status-filter="all">
           <span>集計対象</span><strong id="activeCount">-</strong>
@@ -154,7 +130,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/config.js?v=20260720-3"></script>
   <script src="js/classifier.js?v=20260721-4"></script>
-  <script src="js/supabase-client.js?v=20260721-1"></script>
-  <script src="js/admin.js?v=20260721-1"></script>
+  <script src="js/supabase-client.js?v=20260906-1"></script>
+  <script src="js/admin.js?v=20260906-1"></script>
 </body>
 </html>

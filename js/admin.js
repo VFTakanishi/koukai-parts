@@ -1,15 +1,6 @@
 (function () {
   const elements = {
-    loginSection: document.getElementById("loginSection"),
-    passwordResetSection: document.getElementById("passwordResetSection"),
     dashboardSection: document.getElementById("dashboardSection"),
-    logoutButton: document.getElementById("logoutButton"),
-    loginForm: document.getElementById("loginForm"),
-    loginButton: document.getElementById("loginButton"),
-    loginMessage: document.getElementById("loginMessage"),
-    passwordResetForm: document.getElementById("passwordResetForm"),
-    passwordResetButton: document.getElementById("passwordResetButton"),
-    passwordResetMessage: document.getElementById("passwordResetMessage"),
     recordsBody: document.getElementById("recordsBody"),
     recordsMessage: document.getElementById("recordsMessage"),
     searchInput: document.getElementById("searchInput"),
@@ -40,8 +31,6 @@
     activeAliasRecord: null,
     searchTimer: null
   };
-
-  let recoveryMode = /(?:#|&|\?)type=recovery(?:&|$)/.test(window.location.href);
 
   function setMessage(element, text, type) {
     element.textContent = text;
@@ -399,79 +388,6 @@
     }
   }
 
-  async function showDashboard() {
-    elements.loginSection.classList.add("hidden");
-    elements.passwordResetSection.classList.add("hidden");
-    elements.dashboardSection.classList.remove("hidden");
-    elements.logoutButton.hidden = false;
-    await refreshDashboard();
-  }
-
-  function showLogin() {
-    elements.dashboardSection.classList.add("hidden");
-    elements.passwordResetSection.classList.add("hidden");
-    elements.loginSection.classList.remove("hidden");
-    elements.logoutButton.hidden = true;
-  }
-
-  function showPasswordReset() {
-    elements.loginSection.classList.add("hidden");
-    elements.dashboardSection.classList.add("hidden");
-    elements.passwordResetSection.classList.remove("hidden");
-    elements.logoutButton.hidden = true;
-    document.getElementById("newPassword").focus();
-  }
-
-  elements.loginForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    elements.loginButton.disabled = true;
-    try {
-      await window.TuningSupabase.signIn(document.getElementById("email").value.trim(), document.getElementById("password").value);
-      setMessage(elements.loginMessage, "", "");
-      await showDashboard();
-    } catch (error) {
-      console.error("Failed to sign in.", error);
-      setMessage(elements.loginMessage, "ログインできませんでした。メールアドレスとパスワードを確認してください。", "error");
-    } finally {
-      elements.loginButton.disabled = false;
-    }
-  });
-
-  elements.passwordResetForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    const password = document.getElementById("newPassword").value;
-    const confirmation = document.getElementById("newPasswordConfirm").value;
-    setMessage(elements.passwordResetMessage, "", "");
-
-    if (password.length < 8) {
-      setMessage(elements.passwordResetMessage, "パスワードは8文字以上で入力してください。", "error");
-      return;
-    }
-    if (password !== confirmation) {
-      setMessage(elements.passwordResetMessage, "2つのパスワードが一致していません。", "error");
-      return;
-    }
-
-    elements.passwordResetButton.disabled = true;
-    try {
-      await window.TuningSupabase.updatePassword(password);
-      recoveryMode = false;
-      window.history.replaceState({}, document.title, window.location.pathname);
-      setMessage(elements.passwordResetMessage, "パスワードを変更しました。管理画面を開きます。", "success");
-      window.setTimeout(showDashboard, 600);
-    } catch (error) {
-      console.error("Failed to reset password.", error);
-      setMessage(elements.passwordResetMessage, "パスワードを変更できませんでした。再設定メールをもう一度発行してください。", "error");
-    } finally {
-      elements.passwordResetButton.disabled = false;
-    }
-  });
-
-  elements.logoutButton.addEventListener("click", async function () {
-    await window.TuningSupabase.signOut();
-    showLogin();
-  });
-
   elements.recordsBody.addEventListener("click", function (event) {
     const button = event.target.closest("button[data-action]");
     if (!button) return;
@@ -506,32 +422,20 @@
   async function initialize() {
     populateFilters();
     if (!window.TuningSupabase.hasSupabaseConfig) {
-      setMessage(elements.loginMessage, "先に接続設定を完了してください。", "error");
+      setMessage(elements.recordsMessage, "先に接続設定を完了してください。", "error");
       return;
     }
-    window.TuningSupabase.onAuthStateChange(function (event) {
-      if (event === "PASSWORD_RECOVERY") {
-        recoveryMode = true;
-        showPasswordReset();
-      }
-    });
     try {
       const aliases = await window.TuningSupabase.fetchPublicAliases();
       window.TuningClassifier.setLearnedAliases(aliases);
     } catch (error) {
       console.warn("Aliases could not be loaded.", error);
     }
-    const session = await window.TuningSupabase.getSession();
-    if (recoveryMode && session) showPasswordReset();
-    else if (session) await showDashboard();
-    else if (recoveryMode) {
-      showLogin();
-      setMessage(elements.loginMessage, "再設定リンクを確認できませんでした。新しい再設定メールを発行してください。", "error");
-    } else showLogin();
+    await refreshDashboard();
   }
 
   initialize().catch(function (error) {
     console.error("Failed to initialize admin.", error);
-    setMessage(elements.loginMessage, "管理画面を開始できませんでした。", "error");
+    setMessage(elements.recordsMessage, "管理画面を開始できませんでした。", "error");
   });
 })();

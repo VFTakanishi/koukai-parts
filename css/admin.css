@@ -33,10 +33,6 @@ button { cursor: pointer; }
 .admin-header h1 { margin: 0; font-size: 38px; letter-spacing: .02em; }
 .admin-lead { margin: 7px 0 0; color: #d7dce1; }
 .panel { border: 1px solid rgba(255,255,255,.2); border-radius: 14px; background: var(--panel); box-shadow: var(--shadow); }
-.login-panel { width: 520px; margin: 70px auto 0; padding: 28px; }
-.login-panel h2 { margin-top: 0; }
-.login-form { display: grid; gap: 16px; margin-top: 22px; }
-.form-hint { margin: -8px 0 0; color: var(--muted); font-size: 12px; }
 label { color: #3b3732; font-size: 13px; font-weight: 800; }
 input, select { width: 100%; margin-top: 6px; border: 1px solid var(--line); border-radius: 8px; padding: 10px 11px; background: white; color: var(--ink); }
 input:focus, select:focus, button:focus { outline: 3px solid rgba(241,200,76,.45); outline-offset: 1px; }

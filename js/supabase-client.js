@@ -2,9 +2,7 @@
   const config = window.APP_CONFIG || {};
   const hasSupabaseConfig = Boolean(config.SUPABASE_URL && config.SUPABASE_PUBLISHABLE_KEY);
   const client = hasSupabaseConfig && window.supabase
-    ? window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_PUBLISHABLE_KEY, {
-        auth: { persistSession: true, autoRefreshToken: true }
-      })
+    ? window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_PUBLISHABLE_KEY)
     : null;
 
   function requireClient() {
@@ -48,39 +46,6 @@
       throw error;
     }
     return { duplicate: false };
-  }
-
-  async function signIn(email, password) {
-    requireClient();
-    const result = await client.auth.signInWithPassword({ email, password });
-    if (result.error) {
-      throw result.error;
-    }
-    return result.data;
-  }
-
-  async function signOut() {
-    if (!client) return;
-    const { error } = await client.auth.signOut();
-    if (error) throw error;
-  }
-
-  async function getSession() {
-    if (!client) return null;
-    const result = await client.auth.getSession();
-    return result.data.session;
-  }
-
-  async function updatePassword(password) {
-    requireClient();
-    const { data, error } = await client.auth.updateUser({ password });
-    if (error) throw error;
-    return data;
-  }
-
-  function onAuthStateChange(callback) {
-    requireClient();
-    return client.auth.onAuthStateChange(callback);
   }
 
   function applyAdminFilters(query, options) {
@@ -222,12 +187,7 @@
     fetchAllAdminRecords,
     fetchPublicAliases,
     fetchStats,
-    getSession,
     insertRegret,
-    onAuthStateChange,
-    signIn,
-    signOut,
-    updatePassword,
     updateRecord,
     upsertAlias
   };
